@@ -1,0 +1,73 @@
+import random as rd, matplotlib as mpl, matplotlib.pyplot as plt, numpy as np, pandas as pd
+
+flipCount = 0
+headsCurrstreak = 0
+tailsCurrstreak = 0
+tailsMaxstreak = 0
+headsMaxstreak = 0
+heads = 0
+tails = 0
+last = 'n'
+
+try:
+    flipCountinput = int(input('How many coinflips would you like to perform?: '))
+except:
+    print('Invalid Input!')
+    # exit()
+    
+while flipCount < flipCountinput:
+    
+    randomVar = rd.randint(0, 1)
+    flipCount += 1
+    
+    if randomVar == 0:
+        heads += 1
+        headsCurrstreak += 1
+        
+        if last == 'heads':
+            if headsCurrstreak > headsMaxstreak:
+                headsMaxstreak = headsCurrstreak
+                
+        elif last == 'tails':
+            tailsCurrstreak = 0
+            
+            if headsCurrstreak > headsMaxstreak:
+                headsMaxstreak = headsCurrstreak
+                
+        else:
+            headsMaxstreak = headsCurrstreak
+        
+        last = 'heads'
+            
+        
+    else:
+        tails += 1
+        tailsCurrstreak += 1
+        
+        if last == 'tails':
+            if tailsCurrstreak > tailsMaxstreak:
+                tailsMaxstreak = tailsCurrstreak
+                
+        elif last == 'heads':
+            headsCurrstreak = 0
+            
+            if tailsCurrstreak > tailsMaxstreak:
+                tailsMaxstreak = tailsCurrstreak
+                
+        else:
+            tailsMaxstreak = tailsCurrstreak
+        
+        last = 'tails'
+        
+if tails > heads:
+    difference = tails - heads
+elif heads > tails:
+    difference = heads - tails
+else:
+    difference = 0
+    
+hpct = ((flipCountinput - tails) / flipCountinput) * 100
+tpct = ((flipCountinput - heads) / flipCountinput) * 100
+
+print('Total Coin Flips Performed: {}'.format(flipCountinput))
+print('Number of Heads: {}\nNumber of Tails: {}\nDifference: {}\nHeads Percent: {}\nTails Percent: {}'.format(heads, tails, difference, hpct, tpct))
